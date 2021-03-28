@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, FormGroup, InputGroup, Intent } from "@blueprintjs/core";
 import { Formik, Form, ErrorMessage } from "formik";
 import { validationSchema } from "./validationSchema";
+import { AppToaster } from "../../AppToaster";
 
 const FormContainer = styled.div`
   display: flex;
@@ -36,8 +37,12 @@ const initialValues = {
 };
 
 const onSubmit = (values, actions) => {
-  console.log("hello");
-  console.log(values);
+  // console.log(values);
+  actions.resetForm();
+  AppToaster.show({
+    message: "Form Submitted successfully",
+    intent: Intent.SUCCESS,
+  });
 };
 export const UserForm = () => {
   return (
@@ -48,7 +53,14 @@ export const UserForm = () => {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          {({ values, handleChange, handleBlur, handleSubmit }) => (
+          {({
+            values,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isValid,
+            dirty,
+          }) => (
             <Form>
               <div>
                 <h2>Live Modification</h2>
@@ -83,7 +95,11 @@ export const UserForm = () => {
                 </ErrorMessage>
               </FormGroup>
 
-              <Button onClick={handleSubmit} intent={Intent.SUCCESS}>
+              <Button
+                disabled={!(isValid && dirty)}
+                onClick={handleSubmit}
+                intent={Intent.SUCCESS}
+              >
                 LOGIN
               </Button>
             </Form>
