@@ -8,6 +8,9 @@ export const Home = () => {
         <li>
           <Link to="/form-1">Baisc Form</Link>
         </li>
+        <li>
+          <Link to="/form-2">Complex Form</Link>
+        </li>
       </ul>
     </div>
   );
